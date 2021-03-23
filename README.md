@@ -1,14 +1,5 @@
-# sqlalchemy_challenge
+# SqlAlchemy Challenge
 
-### Before You Begin
-
-1. Create a new repository for this project called `sqlalchemy-challenge`. **Do not add this homework to an existing repository**.
-
-2. Clone the new repository to your computer.
-
-3. Add your Jupyter notebook and `app.py` to this folder. These will be the main scripts to run for analysis.
-
-4. Push the above changes to GitHub or GitLab.
 
 ![surfs-up.png](images/surfs-up.png)
 
@@ -18,15 +9,7 @@ Congratulations! You've decided to treat yourself to a long holiday vacation in 
 
 To begin, use Python and SQLAlchemy to do basic climate analysis and data exploration of your climate database. All of the following analysis should be completed using SQLAlchemy ORM queries, Pandas, and Matplotlib.
 
-* Use the provided [starter notebook](climate_starter.ipynb) and [hawaii.sqlite](Resources/hawaii.sqlite) files to complete your climate analysis and data exploration.
-
-* Use SQLAlchemy `create_engine` to connect to your sqlite database.
-
-* Use SQLAlchemy `automap_base()` to reflect your tables into classes and save a reference to those classes called `Station` and `Measurement`.
-
-* Link Python to the database by creating an SQLAlchemy session.
-
-* **Important** Don't forget to close out your session at the end of your notebook.
+* Use the provided [hawaii.sqlite](Resources/hawaii.sqlite) file to complete climate analysis and data exploration.
 
 ### Precipitation Analysis
 
@@ -41,8 +24,6 @@ To begin, use Python and SQLAlchemy to do basic climate analysis and data explor
 * Sort the DataFrame values by `date`.
 
 * Plot the results using the DataFrame `plot` method.
-
-
 
 * Use Pandas to print the summary statistics for the precipitation data.
 
@@ -110,11 +91,5 @@ Now that you have completed your initial analysis, design a Flask API based on t
   * When given the start only, calculate `TMIN`, `TAVG`, and `TMAX` for all dates greater than and equal to the start date.
 
   * When given the start and the end date, calculate the `TMIN`, `TAVG`, and `TMAX` for dates between the start and end date inclusive.
-
-## Hints
-
-* You will need to join the station and measurement tables for some of the queries.
-
-* Use Flask `jsonify` to convert your API data into a valid JSON response object.
 
 - - -
