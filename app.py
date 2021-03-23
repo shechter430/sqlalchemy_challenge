@@ -72,3 +72,64 @@ def precipitation():
         # Return JSON representation of dictionary
       return jsonify(prcp_list)
 
+# Stations Route
+@app.route("/api/v1.0/stations")
+def stations():
+      session = Session(engine)
+        # Return a JSON List of Stations From the Dataset
+      stations_all = session.query(Station.station, Station.name).all()
+      session.close()
+        # Convert into list
+      station_list = list(stations_all)
+        # Return JSON List of Stations from the Dataset
+      return jsonify(station_list)
+
+# TOBs Route
+@app.route("/api/v1.0/tobs")
+def tobs():
+      session = Session(engine)
+        # Query the dates and temperature observations of the most active station for the last year of data
+      one_year_ago = dt.date(2017,8,23) - dt.timedelta(days=365)
+      tobs_data = session.query(Measurement.date, Measurement.tobs).\
+              filter(Measurement.date >= one_year_ago).\
+              order_by(Measurement.date).all()
+      session.close()
+        # Convert into list
+      tobs_data_list = list(tobs_data)
+        # Return a JSON list of temperature observations (TOBS) for the previous year
+      return jsonify(tobs_data_list)
+
+# Start Day Route
+@app.route("/api/v1.0/<start>")
+def start_day(start):
+      session = Session(engine)
+      # When given the start only, calculate TMIN, TAVG, and TMAX for all dates greater than and equal to the start date
+      start_day = session.query(Measurement.date, func.min(Measurement.tobs), func.avg(Measurement.tobs), 
+      func.max(Measurement.tobs)).\
+              filter(Measurement.date >= start).\
+              group_by(Measurement.date).all()
+      session.close()
+        # Convert list
+      start_day_list = list(start_day)
+        # Return a JSON list of the minimum temperature, the average temperature, and the max temperature 
+        # for a given start or start-end range
+      return jsonify(start_day_list)
+
+# Start-End Day Route
+@app.route("/api/v1.0/<start>/<end>")
+def start_end_day(start, end):
+      session = Session(engine)
+      # When given the start and the end date, calculate the TMIN, TAVG, and TMAX for dates between the start and end date inclusive
+      start_end_day = session.query(Measurement.date, func.min(Measurement.tobs), func.avg(Measurement.tobs), 
+      func.max(Measurement.tobs)).\
+              filter(Measurement.date >= start).\
+              filter(Measurement.date <= end).\
+              group_by(Measurement.date).all()
+      session.close()
+        # Convert list
+      start_end_day_list = list(start_end_day)
+        # Return a JSON list of the minimum temperature, the average temperature, and the max temperature for a given start or start-end range
+      return jsonify(start_end_day_list)
+
+if __name__ == '__main__':
+    app.run(debug=True)
